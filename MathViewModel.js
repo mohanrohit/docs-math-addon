@@ -6,11 +6,6 @@ function MathViewModel()
     self.expression = ko.observable("")
     self.latex = ko.observable("");
 
-    self.generateLatex = function()
-    {
-      return self.latex();
-    };
-
     self.init = function()
     {
       var expressionInput = document.getElementById("math-expression");
@@ -24,10 +19,6 @@ function MathViewModel()
       };
       
       self.mathField = MQ.MathField(expressionInput, { handlers: mathFieldHandlers });
-
-      // self.latex = ko.computed(function() {
-        // return self.mathField.latex();
-      // });
     };
 
     self.init();
