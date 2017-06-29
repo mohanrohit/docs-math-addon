@@ -1,0 +1,68 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Make a worksheet</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Place favicon.ico in the root directory -->
+
+        <!-- from html boilerplate -->
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+
+        <!-- for this application -->
+        <link rel="stylesheet" href="css/bootstrap-3.3.6.min.css">
+        <link rel="stylesheet" href="css/mathquill.css">
+
+        <script src="js/vendor/jquery-1.12.0.min.js"></script>
+        <script src="js/vendor/bootstrap-3.3.6.min.js"></script>
+        <script src="js/vendor/knockout-3.4.2.js"></script>
+
+        <script src="js/vendor/mathquill.js"></script>
+        <script>
+        var MQ = MathQuill.getInterface(2);
+        </script>
+
+        <script src='https://cdn.tinymce.com/4/tinymce.min.js'></script>
+        <script>
+        tinymce.init({
+          selector: '#content',
+          statusbar: false,
+          toolbar: 'fontselect fontsizeselect',
+          fontsize_formats: '10pt 12pt 14pt 16pt',
+          font_formats: "Proportional=liberation sans,arial,helvetica,sans-serif;Monospace=liberation mono,courier new,source code pro, monospace"
+        });
+        </script>
+
+        <script src="MathViewModel.js"></script>
+    </head>
+
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+        <div class="container">
+          <div id="editor">
+            <!--<textarea id="content" data-bind="content"></textarea>-->
+            <span id="math-expression" class="col-xs-6"></span>
+            <p></p>
+            <span id="latex" class="col-xs-6" style="border: 1px dotted silver" data-bind="text: latex"></span>
+          </div>
+        </div>
+
+        <script>window.jQuery || document.write('<script src="jquery-1.9.1.js"><\/script>')</script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+        <script>
+          mathViewModel = new MathViewModel();
+          ko.applyBindings(mathViewModel, document.getElementById("editor"));
+        </script>
+    </body>
+</html>
