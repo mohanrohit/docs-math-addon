@@ -1,90 +1,103 @@
-<!doctype html>
-<html class="no-js" lang="">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>docs-math-addon</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+    <!-- The CSS package above applies Google styling to buttons and other elements. -->
 
-        <!-- Place favicon.ico in the root directory -->
+    <!-- for this add-on -->
+    <link rel="stylesheet" href="css/mathquill.css" type="text/css">
 
-        <!-- from html boilerplate -->
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
+    <script src="js/vendor/jquery-1.12.0.min.js"></script>
+    <script src="js/vendor/mathquill.js"></script>
 
-        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+    <script>
+      var MQ = MathQuill.getInterface(2);
+    </script>
 
-        <!-- for this application -->
-        <link rel="stylesheet" href="css/bootstrap-3.3.6.min.css">
-        <link rel="stylesheet" href="css/mathquill.css">
+    <script src="js/vendor/knockout-3.4.2.js"></script>
+    <script src="MathViewModel.js"></script>
 
-        <script src="js/vendor/jquery-1.12.0.min.js"></script>
-        <script src="js/vendor/bootstrap-3.3.6.min.js"></script>
-        <script src="js/vendor/knockout-3.4.2.js"></script>
+    <style>
+    .branding-below {
+      bottom: 56px;
+      top: 0;
+    }
 
-        <script src="js/vendor/mathquill.js"></script>
-        <script>
-        var MQ = MathQuill.getInterface(2);
-        </script>
+    .branding-text {
+      left: 7px;
+      position: relative;
+      top: 3px;
+    }
 
-        <script src='https://cdn.tinymce.com/4/tinymce.min.js'></script>
-        <script>
-        tinymce.init({
-          selector: '#content',
-          statusbar: false,
-          toolbar: 'fontselect fontsizeselect',
-          fontsize_formats: '10pt 12pt 14pt 16pt',
-          font_formats: "Proportional=liberation sans,arial,helvetica,sans-serif;Monospace=liberation mono,courier new,source code pro, monospace"
-        });
-        </script>
+    .col-contain {
+      overflow: hidden;
+    }
 
-        <script src="MathViewModel.js"></script>
-    </head>
+    .col-one {
+      float: left;
+      width: 50%;
+    }
 
-    <body>
-        <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+    .logo {
+      vertical-align: middle;
+    }
 
-        <!-- Add your site or application content here -->
-        <div class="container">
-          <div class="col-xs-8">
-            <div class="panel panel-info">
-              <div class="panel-heading"><h4 class="panel-title">Formula</h4></div>
-              <div class="panel-body">
-                <span id="formula" style="width: 100%; font-size: 2em; border: 1px solid silver; border-radius: 4px"></span>
-              </div>
-            </div>
-            <div class="panel panel-default">
-              <div class="panel-heading"><h4 class="panel-title">Preview</h4></div>
-              <div class="panel-body">
-                
-                <table class="table">
-                  <tr>
-                    <td class="col-xs-1 default" style="vertical-align: middle">LaTeX</td>
-                    <td class="col-xs-9 default" style="vertical-align: middle"><span id="latex" data-bind="text: latex" style="width: 100%; font-size: 1.5em"></span></td>
-                    <td class="col-xs-2 default" style="vertical-align: middle"></td>
-                  <tr>
-                  <tr>
-                    <td>Image</td>
-                    <td><img data-bind="attr: {src: imageUrl}"></img></td>
-                    <td><button class="btn btn-warning btn-sm form-control" data-bind="click: previewImage">PREVIEW</button></td>
-                  </tr>
-                </table>
-              </div>
-            </div>
-            <button class="btn btn-primary btn-sm form-control" style="width: 25%" data-bind="click: insertImage">INSERT</button>
-            
+    .radio-spacer {
+      height: 20px;
+    }
+
+    .width-100 {
+      width: 100%;
+    }
+
+    table {
+      /*border: 1px solid silver;*/
+    }
+
+    td {
+      /*padding: 4px;*/
+      vertical-align: middle;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="editor">
+      <div style="padding: 8px">
+        <div id="math" style="padding: 4px; padding-left: 0; padding-top: 2px">
+          <p><b>Enter formula to insert</b></p>
+          <div>
+            <span id="formula-input" style="width: 100%; height: 2em; font-size: 1.5em; border: 1px solid silver; border-radius: 4px"></span>
           </div>
+          <span style="font-size: 0.8em">Powered by <a href="https://mathquill.com">MathQuill</a></span>
         </div>
 
-        <script>window.jQuery || document.write('<script src="jquery-1.9.1.js"><\/script>')</script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
-        <script>
-          mathViewModel = new MathViewModel();
-          ko.applyBindings(mathViewModel, document.getElementById("editor"));
-        </script>
-    </body>
+        <div id="preview" style="padding: 4px; padding-left: 0; padding-top: 2px">
+          <div>
+            <p><b>LaTeX preview</b></p>
+            <span id="latex-preview" style="height: 1em; font-: monospace" data-bind="text: latex"></span></td>
+          </div>
+          <div>
+            <p><b>Image preview</b></p>
+            <div>
+              <label for="render-inline-checkbox">Inline</label>
+              <input type="checkbox" id="render-inline-checkbox" data-bind="checked: isInline"></input>
+            </div>
+            <!-- ko: if imageUrl -->
+            <p><img style="height: 1em" data-bind="attr: {src: imageUrl}"></img></p>
+            <button id="preview-formula" data-bind="click: previewFormula">PREVIEW</button>
+            <!-- /ko -->
+          </div>
+        </div>
+        <div id="commands" style="padding: 4px; padding-left: 0; padding-top: 4px">
+          <button id="edit-formula" class="action" onclick="editFormula">LOAD</button>
+          <button id="insert-formula" class="create" onclick="insertFormula()">INSERT</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      mathViewModel = new MathViewModel();
+      ko.applyBindings(mathViewModel, document.getElementById("editor"));
+    </script>
+  </body>
 </html>

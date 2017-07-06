@@ -3,17 +3,27 @@ function MathViewModel()
     var self = this;
     
     self.content = ko.observable("");
-    self.expression = ko.observable("")
+    self.formula = ko.observable("")
     self.latex = ko.observable("");
+    self.isInline = ko.observable(false);
 
     self.imageUrl = ko.observable("");
 
     self.getImageUrl = function()
     {
-      return "https://latex.codecogs.com/png.latex?" + self.latex();
+      var params = "";
+
+      if (self.isInline())
+      {
+        params = params + "%5cinline%20";
+      }
+
+      params = params + self.latex();
+      
+      return "https://latex.codecogs.com/svg.latex?" + params;
     };
 
-    self.previewImage = function()
+    self.previewFormula = function()
     {
       // get image from CodeCogs
       self.imageUrl(self.getImageUrl());
@@ -26,7 +36,7 @@ function MathViewModel()
 
     self.init = function()
     {
-      var expressionInput = document.getElementById("formula");
+      var formulaInput = document.getElementById("formula-input");
 
       var mathFieldHandlers =
       {
@@ -36,7 +46,7 @@ function MathViewModel()
         }
       };
       
-      self.mathField = MQ.MathField(expressionInput, { handlers: mathFieldHandlers });
+      self.mathField = MQ.MathField(formulaInput, { handlers: mathFieldHandlers });
     };
 
     self.init();
